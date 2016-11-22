@@ -28,7 +28,7 @@ def download(id):
     print('downloading match %s' % id)
     replay = requests.get(js['replay_url'])
     data = bz2.decompress(replay.content)
-    with open('replays/%s.dem' % id, 'wb') as f:
+    with open('../replays/%s.dem' % id, 'wb') as f:
         f.write(data)
 
 with ThreadPoolExecutor(50) as tx:

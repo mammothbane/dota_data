@@ -2,5 +2,5 @@
 *.iml
 *.pyc
 replays
-main_event_ids
+retrieve/main_event_ids
 out
