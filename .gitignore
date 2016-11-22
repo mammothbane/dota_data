@@ -1,0 +1,6 @@
+.idea
+*.iml
+*.pyc
+replays
+main_event_ids
+out
