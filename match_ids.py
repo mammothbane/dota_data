@@ -5,9 +5,8 @@ from concurrent.futures import ThreadPoolExecutor
 match_ids = []
 link = re.compile(r'/matches/([0-9]+)')
 
-# league = '4664'
-league = '2733'
-pages = 21
+league = '4664'
+pages = 20
 
 USER_AGENT = 'Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/54.0.2840.99 Safari/537.36'
 

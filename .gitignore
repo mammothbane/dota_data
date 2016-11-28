@@ -1,11 +1,7 @@
 .idea
-*.iml
 *.pyc
-replays
-retrieve/main_event_ids
+data
 out
-*.lnk
-target
-project
 *.csv
 *.json
+match_ids
