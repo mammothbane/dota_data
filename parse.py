@@ -1,10 +1,10 @@
-import os
-import json
 import csv
+import json
+import os
 
 data = {}
-for match in os.listdir('../replays/data'):
-    with open('../replays/data/' + match) as f:
+for match in os.listdir('data'):
+    with open('data/' + match) as f:
         data[match] = json.load(f)
 
 out = {}

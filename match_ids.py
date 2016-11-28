@@ -1,6 +1,7 @@
-import requests
 import re
 from concurrent.futures import ThreadPoolExecutor
+
+import requests
 
 match_ids = []
 link = re.compile(r'/matches/([0-9]+)')
@@ -39,6 +40,6 @@ with ThreadPoolExecutor(pages) as tx:
     for f in futures:
         match_ids += f.result()
 
-with open('out', 'w') as f:
+with open('match_ids', 'w') as f:
     for elem in match_ids:
         f.write(elem + '\n')
