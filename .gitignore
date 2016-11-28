@@ -4,3 +4,6 @@
 replays
 retrieve/main_event_ids
 out
+*.lnk
+target
+project
