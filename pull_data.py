@@ -1,26 +1,29 @@
 import json
 import os
 from concurrent.futures import ThreadPoolExecutor
+from urllib.parse import urlencode
 
 import backoff
 import requests
 
-with open('match_ids') as f:
-    data = f.readlines()
+QUERY = '''
+SELECT match_id, leagueid
+FROM matches
+WHERE leagueid = 4664
+'''
 
-os.makedirs('data')
+req = requests.get('http://api.opendota.com/api/explorer?{}'.format(urlencode({'sql': QUERY})))
 
-data = [elem for elem in data if str(elem).strip() not in os.listdir('data')]
+if req.status_code != 200:
+    raise Exception('unable to retrieve data from api')
+
+items = os.listdir('data')
+data = [elem['match_id'] for elem in req.json()['rows'] if str(elem['match_id']) not in items]
 API_ROOT = 'https://api.opendota.com/api/matches/{}'
 
 
 def write_out(fut):
     res = fut.result().json()
-
-    if 'match_id' not in res:
-        print("HELP")
-        print(res)
-        exit()
 
     with open('data/%s' % res['match_id'], 'w') as f:
         json.dump(res, f)
