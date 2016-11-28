@@ -7,3 +7,5 @@ out
 *.lnk
 target
 project
+*.csv
+*.json
