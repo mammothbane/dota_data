@@ -6,6 +6,7 @@ from urllib.parse import urlencode
 import backoff
 import requests
 
+# noinspection SqlNoDataSourceInspection,SqlResolve
 QUERY = '''
 SELECT match_id, leagueid
 FROM matches
