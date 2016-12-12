@@ -25,12 +25,19 @@ for match, info in data.items():
         first_tower_radiant = min(towers, key=lambda x: x['time'])['team'] == 2
 
     rosh_killed = [elem for elem in info['objectives'] if elem['type'] == 'CHAT_MESSAGE_ROSHAN_KILL']
+    radiant_rosh_lead = 0
 
     if not rosh_killed:
         radiant_first_rosh = None
         killer = None
     else:
         killer = min(rosh_killed, key=lambda x: x['time'])['team']
+        for elem in rosh_killed:
+            diff = 1
+            if elem['team'] != 2:
+                diff = -1
+
+            radiant_rosh_lead += diff
 
     radiant_first_rosh = killer == 2
 
@@ -87,13 +94,21 @@ for match, info in data.items():
         'dire_sen': dire_sen_count,
         'radiant_lhl_10': lh_diff_at_time(9),
         'radiant_lhl_20': lh_diff_at_time(19),
-        'radiant_lhl_30': lh_diff_at_time(29)
+        'radiant_lhl_30': lh_diff_at_time(29),
+        'game_duration_sec': info['duration'],
+        'radiant_team': info['radiant_team']['name'] if 'radiant_team' in info else None,
+        'dire_team': info['dire_team']['name'] if 'dire_team' in info else None,
+        'radiant_rosh_lead': radiant_rosh_lead
     }
+
 
 with open('ti6.csv', 'w', newline='') as f:
     w = csv.DictWriter(f, ['winner', 'dire_obs', 'radiant_obs', 'first_roshan', 'radiant_gl_10', 'radiant_gl_20',
-                           'radiant_gl_30', 'first_blood', 'first_tower', 'radiant_kl_10', 'radiant_kl_20',
-                           'radiant_kl_30', 'radiant_sen', 'dire_sen',
-                           'radiant_lhl_10', 'radiant_lhl_20', 'radiant_lhl_30'])
+                           'radiant_gl_30', 'first_blood', 'first_tower',
+                           'radiant_kl_10', 'radiant_kl_20', 'radiant_kl_30',
+                           'radiant_sen', 'dire_sen',
+                           'radiant_lhl_10', 'radiant_lhl_20', 'radiant_lhl_30',
+                           'game_duration_sec', 'radiant_team', 'dire_team',
+                           'radiant_rosh_lead'])
     w.writeheader()
     w.writerows(out.values())
